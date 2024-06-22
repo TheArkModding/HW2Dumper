@@ -116,19 +116,45 @@ namespace HW2Dumper
         {
             await Task.Run(() =>
             {
-                Console.WriteLine("RunUWPInjector called.");
-                ProcessStartInfo startInfo = new()
+                try
                 {
-                    FileName = uwpInjectorPath,
-                    Arguments = $"-p {gameProcessId} -c -d {TxBoxDumpLocation.Text}",
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
+                    Console.WriteLine("RunUWPInjector called.");
 
-                uwpInjectorProcess = Process.Start(startInfo);
-                Console.WriteLine($"UWPInjector started with PID: {uwpInjectorProcess?.Id}");
+                    if (!File.Exists(uwpInjectorPath))
+                    {
+                        Console.WriteLine($"File not found: {uwpInjectorPath}");
+                        return;
+                    }
+
+                    ProcessStartInfo startInfo = new()
+                    {
+                        FileName = uwpInjectorPath,
+                        Arguments = $"-p {gameProcessId} -c -d {TxBoxDumpLocation.Text}",
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
+
+                    uwpInjectorProcess = Process.Start(startInfo);
+                    if (uwpInjectorProcess != null)
+                    {
+                        Console.WriteLine($"UWPInjector started with PID: {uwpInjectorProcess.Id}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Failed to start UWPInjector process.");
+                    }
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Console.WriteLine($"InvalidOperationException: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
             });
         }
+
 
         private async Task BackgroundWorker_DoWorkAsync()
         {

@@ -36,6 +36,7 @@
             BtnChangeDumpFolder = new Button();
             label2 = new Label();
             BtnDump = new Button();
+            label1 = new Label();
             SuspendLayout();
             // 
             // CheckGameOpen
@@ -99,12 +100,23 @@
             BtnDump.UseVisualStyleBackColor = true;
             BtnDump.Click += BtnDump_Click;
             // 
+            // label1
+            // 
+            label1.FlatStyle = FlatStyle.Flat;
+            label1.Location = new Point(425, 133);
+            label1.Name = "label1";
+            label1.Size = new Size(139, 16);
+            label1.TabIndex = 7;
+            label1.Text = "Made by CinderellaKuru";
+            label1.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(576, 172);
+            Controls.Add(label1);
             Controls.Add(BtnDump);
             Controls.Add(label2);
             Controls.Add(BtnChangeDumpFolder);
@@ -116,7 +128,7 @@
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "HW2Dumper";
-            FormClosing += OnApplicationExit;
+            FormClosing += MainForm_FormClosing;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -130,5 +142,6 @@
         private Button BtnChangeDumpFolder;
         private Label label2;
         private Button BtnDump;
+        private Label label1;
     }
 }
